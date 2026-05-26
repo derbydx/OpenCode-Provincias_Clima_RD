@@ -675,7 +675,7 @@ body {
   gap: 6px;
   flex-shrink: 0;
   margin-left: 8px;
-  padding-top: 6px;
+  padding-top: 12px;
 }
 
 .weather-icon {
