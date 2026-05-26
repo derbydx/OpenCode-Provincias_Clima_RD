@@ -76,6 +76,7 @@ const gruposClima = [
 ];
 
 const app = document.getElementById('app');
+const destacadoGrid = document.getElementById('destacadoGrid');
 const searchInput = document.getElementById('searchInput');
 const visibleCount = document.getElementById('visibleCount');
 const updateInfo = document.getElementById('updateInfo');
@@ -271,6 +272,7 @@ async function fetchWeather() {
     }));
 
     buildGroupChips();
+    renderDestacados();
     applyFilters();
     updateInfo.textContent = `Actualizado: ${new Date().toLocaleString('es-DO')}`;
   } catch (err) {
@@ -284,6 +286,63 @@ async function fetchWeather() {
       </div>
     `;
   }
+}
+
+function renderDestacados() {
+  const conDatos = conClima.filter(p => p.current);
+  if (conDatos.length === 0) return;
+
+  let extremos = [];
+
+  const tormentas = conDatos.filter(p => p.current.weather_code >= 95);
+  const lluvias = conDatos.filter(p => [65, 67, 82].includes(p.current.weather_code));
+  const masCalor = conDatos.sort((a, b) => b.current.temperature_2m - a.current.temperature_2m)[0];
+
+  if (tormentas.length > 0) {
+    extremos.push({ provincia: tormentas[0], tipo: 'tormenta' });
+  }
+  if (lluvias.length > 0 && !extremos.find(e => e.provincia === lluvias[0])) {
+    extremos.push({ provincia: lluvias[0], tipo: 'lluvia' });
+  }
+
+  if (extremos.length === 0) {
+    extremos.push({ provincia: masCalor, tipo: 'calor' });
+  } else if (extremos.length < 2 && masCalor && !extremos.find(e => e.provincia === masCalor)) {
+    extremos.push({ provincia: masCalor, tipo: 'calor' });
+  }
+
+  destacadoGrid.innerHTML = '';
+
+  extremos.forEach(({ provincia: p, tipo }) => {
+    const clima = codigosClima[p.current.weather_code] || { texto: 'Desconocido', icono: '?' };
+    const temp = Math.round(p.current.temperature_2m);
+    const hum = p.current.relative_humidity_2m;
+    const wind = p.current.wind_speed_10m;
+
+    const etiquetas = { calor: 'Calor extremo', lluvia: 'Alerta lluvia', tormenta: 'Tormenta' };
+
+    const card = document.createElement('div');
+    card.className = `card-destacado card-destacado--${tipo}`;
+    card.innerHTML = `
+      <span class="destacado-badge destacado-badge--${tipo}">${etiquetas[tipo]}</span>
+      <div class="card-top">
+        <div class="card-info">
+          <h2>${p.nombre}</h2>
+          <span class="capital">${p.capital}</span>
+        </div>
+        <div class="card-weather-summary">
+          <span class="weather-icon">${clima.icono}</span>
+          <span class="weather-temp">${temp}<span class="unit">°C</span></span>
+        </div>
+      </div>
+      <div class="card-desc">${clima.texto}</div>
+      <div class="card-meta">
+        <span>💧 ${hum}%</span>
+        <span>🍃 ${wind} km/h</span>
+      </div>
+    `;
+    destacadoGrid.appendChild(card);
+  });
 }
 
 // Refresh
