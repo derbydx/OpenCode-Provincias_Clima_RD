@@ -118,25 +118,22 @@ function createCard(p, idx) {
   const card = document.createElement('div');
   card.className = 'card';
   card.dataset.index = idx;
-  card.style.animationDelay = (idx * 0.025) + 's';
+  card.style.animationDelay = (idx * 0.02) + 's';
   card.innerHTML = `
-    <div class="card-header">
-      <div class="province-info">
+    <div class="card-top">
+      <div class="card-info">
         <h2>${p.nombre}</h2>
-        <div class="capital">${p.capital}</div>
+        <span class="capital">${p.capital}</span>
       </div>
-      <div class="flag-dot"><span></span><span></span></div>
+      <div class="card-weather-summary">
+        <span class="weather-icon">${icon}</span>
+        <span class="weather-temp">${temp}<span class="unit">°C</span></span>
+      </div>
     </div>
-    <div class="card-weather">
-      <div class="weather-main">
-        <div class="weather-temp">${temp}<span class="unit">°C</span></div>
-        <div class="weather-icon">${icon}</div>
-      </div>
-      <div class="weather-desc">${desc}</div>
-      <div class="weather-details">
-        <span><span class="label">Humedad:</span> ${hum}%</span>
-        <span><span class="label">Viento:</span> ${wind} km/h</span>
-      </div>
+    <div class="card-desc">${desc}</div>
+    <div class="card-meta">
+      <span>💧 ${hum}%</span>
+      <span>🍃 ${wind} km/h</span>
     </div>
   `;
   return card;

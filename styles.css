@@ -11,6 +11,7 @@
   --texto-suave: #5a5a6a;
   --sombra: 0 8px 32px rgba(0,0,0,0.08);
   --radio: 16px;
+  --radio-boton: 8px;
 }
 
 body {
@@ -156,9 +157,9 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.72rem;
+  padding: 6px 12px;
+  border-radius: var(--radio-boton);
+  font-size: 0.78rem;
   font-weight: 500;
   background: var(--blanco);
   border: 1.5px solid rgba(0,0,0,0.08);
@@ -182,9 +183,9 @@ body {
 .filter-chip input { display: none; }
 
 .filter-row select {
-  padding: 4px 20px 4px 8px;
+  padding: 6px 28px 6px 12px;
   border: 1.5px solid rgba(0,0,0,0.08);
-  border-radius: 8px;
+  border-radius: var(--radio-boton);
   font-family: 'Source Serif 4', Georgia, serif;
   font-size: 0.78rem;
   background: var(--blanco);
@@ -194,7 +195,7 @@ body {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235a5a6a'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 6px center;
+  background-position: right 10px center;
 }
 
 .filter-row select:focus {
@@ -221,7 +222,7 @@ body {
 .btn-refresh {
   padding: 6px 16px;
   border: 1.5px solid var(--azul-claro);
-  border-radius: 8px;
+  border-radius: var(--radio-boton);
   background: transparent;
   color: var(--azul);
   font-family: 'Source Serif 4', Georgia, serif;
@@ -240,7 +241,7 @@ body {
 .btn-reset {
   padding: 6px 16px;
   border: 1.5px solid rgba(0,0,0,0.12);
-  border-radius: 8px;
+  border-radius: var(--radio-boton);
   background: transparent;
   color: var(--texto);
   font-family: 'Source Serif 4', Georgia, serif;
@@ -261,7 +262,7 @@ body {
   margin-left: auto;
   padding: 6px 16px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radio-boton);
   background: var(--rojo);
   color: var(--blanco);
   font-family: 'Source Serif 4', Georgia, serif;
@@ -313,21 +314,21 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 10px;
-  padding-bottom: 6px;
-  border-bottom: 2px solid rgba(0,0,0,0.06);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eaeaea;
 }
 
 .group-icon {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   line-height: 1;
 }
 
 .group-header h2 {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: var(--texto);
+  color: #1a1a1a;
 }
 
 .group-count {
@@ -343,15 +344,15 @@ body {
 /* Group grid */
 .group-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 /* Card */
 .card {
-  background: var(--blanco);
-  border-radius: var(--radio);
-  box-shadow: var(--sombra);
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
   overflow: hidden;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: default;
@@ -359,8 +360,8 @@ body {
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 48px rgba(0,0,0,0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
 }
 
 @keyframes fadeUp {
@@ -368,103 +369,73 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.card-header {
-  padding: 10px 12px 6px;
+.card-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  padding: 14px 14px 0;
 }
 
-.card-header .province-info {
-  flex: 1;
-}
-
-.card-header h2 {
+.card-info h2 {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 0.85rem;
   font-weight: 700;
   line-height: 1.2;
 }
 
-.card-header .capital {
+.card-info .capital {
   font-size: 0.7rem;
-  color: var(--texto-suave);
+  color: #888;
+  display: block;
   margin-top: 1px;
 }
 
-.card-header .flag-dot {
-  display: inline-flex;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-  margin-left: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.card-header .flag-dot span {
-  display: block;
-  width: 50%;
-}
-
-.card-header .flag-dot span:first-child { background: var(--azul); }
-.card-header .flag-dot span:last-child { background: var(--rojo); }
-
-.card-weather {
-  padding: 0 12px 12px;
-}
-
-.weather-main {
+.card-weather-summary {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.weather-icon {
+  font-size: 1.3rem;
+  line-height: 1;
 }
 
 .weather-temp {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.4rem;
+  font-size: 2.5rem;
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.03em;
 }
 
 .weather-temp .unit {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 400;
-  opacity: 0.5;
+  opacity: 0.4;
   vertical-align: super;
 }
 
-.weather-icon {
-  font-size: 1.1rem;
-  line-height: 1;
+.card-desc {
+  padding: 4px 14px 0;
+  font-size: 0.75rem;
+  color: var(--texto-suave);
 }
 
-.weather-desc {
+.card-meta {
+  padding: 8px 14px 12px;
+  display: flex;
+  gap: 12px;
   font-size: 0.7rem;
-  color: var(--texto-suave);
-  text-transform: capitalize;
+  color: #999;
 }
 
-.weather-details {
-  display: flex;
-  gap: 10px;
-  margin-top: 6px;
-  padding-top: 6px;
-  border-top: 1px solid rgba(0,0,0,0.06);
-  font-size: 0.65rem;
-  color: var(--texto-suave);
-}
-
-.weather-details span {
-  display: flex;
+.card-meta span {
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
-}
-
-.weather-details .label {
-  opacity: 0.6;
+  gap: 3px;
 }
 
 /* Loading */
@@ -565,7 +536,6 @@ body {
   .hero h1 { font-size: 1.6rem; }
   .hero { padding: 32px 16px 24px; }
   #app { padding: 16px 12px 32px; }
-  .group-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .search-wrap { padding: 0 12px; }
   .stats-bar { flex-direction: column; gap: 4px; align-items: flex-start; }
   .group-header h2 { font-size: 0.9rem; }
@@ -573,12 +543,4 @@ body {
   .filter-row-actions { flex-wrap: wrap; }
   .btn-subscribe { margin-left: 0; width: 100%; }
   .filter-label-wind { margin-left: 0; }
-}
-
-@media (min-width: 641px) and (max-width: 1024px) {
-  .group-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-@media (min-width: 1025px) and (max-width: 1400px) {
-  .group-grid { grid-template-columns: repeat(4, 1fr); }
 }
