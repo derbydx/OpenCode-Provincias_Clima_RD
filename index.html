@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provincias de Republica Dominicana - Clima Actual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Republica Dominicana <i>y su clima</i></h1>
+    <p>Clima actual de las 32 provincias y el Distrito Nacional</p>
+    <div class="flag-stripe">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</section>
+
+<div class="search-wrap">
+  <input type="text" id="searchInput" placeholder="Buscar provincia o capital..." autocomplete="off">
+</div>
+
+<div class="filter-bar" id="filterBar">
+  <div class="filter-row">
+    <span class="filter-label">Clima:</span>
+    <div id="weatherGroupFilters" class="filter-chips"></div>
+  </div>
+  <div class="filter-row filter-row-actions">
+    <span class="filter-label">Orden:</span>
+    <select id="sortSelect">
+      <option value="default">Por grupo</option>
+      <option value="name">Nombre A-Z</option>
+      <option value="temp-asc">Temperatura baja</option>
+      <option value="temp-desc">Temperatura alta</option>
+    </select>
+    <span class="filter-label filter-label-wind">Viento min:</span>
+    <input type="range" id="windSlider" min="0" max="50" value="0" class="filter-range">
+    <span id="windValue" class="wind-value">0 km/h</span>
+    <button id="subscribeBtn" class="btn-subscribe">Suscribirse</button>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <span><span class="count" id="visibleCount">0</span> provincias mostradas</span>
+  <span id="updateInfo">Cargando...</span>
+</div>
+
+<div id="app"></div>
+
+<div id="subscribeModal" class="modal-overlay hidden">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <div class="modal-body">
+      <div class="modal-icon">🇩🇴</div>
+      <h3>Gracias por tu interes!</h3>
+      <p>Proximamente tendremos novedades sobre alertas climaticas en Republica Dominicana.</p>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
