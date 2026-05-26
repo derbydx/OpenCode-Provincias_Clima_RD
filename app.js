@@ -468,7 +468,7 @@ setInterval(fetchWeather, 3600000);
 // Reset filters
 resetBtn.addEventListener('click', () => {
   searchInput.value = '';
-  sortSelect.value = 'default';
+  sortSelect.value = 'name';
   windSlider.value = 0;
   windValue.textContent = '0 km/h';
   filterChips.querySelectorAll('.filter-chip').forEach(chip => chip.classList.add('active'));
