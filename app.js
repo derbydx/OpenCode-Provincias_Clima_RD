@@ -349,11 +349,11 @@ function renderDestacados() {
     destacadoGrid.appendChild(card);
   });
 
-  const lluvias = conDatos.filter(p =>
+  const lluviasHoy = conDatos.filter(p =>
     [51, 53, 55, 56, 57, 80, 81, 82].includes(p.current.weather_code)
   );
 
-  if (lluvias.length === 0) {
+  if (lluviasHoy.length === 0) {
     lluviasAhora.style.display = '';
     lluviasGrid.innerHTML = '<div class="lluvias-vacio">Buen tiempo en todo el pais</div>';
     return;
@@ -361,7 +361,7 @@ function renderDestacados() {
 
   lluviasAhora.style.display = '';
   lluviasGrid.innerHTML = '';
-  lluvias.forEach((p, i) => {
+  lluviasHoy.forEach((p, i) => {
     const clima = codigosClima[p.current.weather_code] || { texto: 'Desconocido', icono: '?' };
     const temp = Math.round(p.current.temperature_2m);
     const hum = p.current.relative_humidity_2m;
