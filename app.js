@@ -349,13 +349,6 @@ function renderDestacados() {
 }
 
 function renderUbicacion() {
-  const savedProvincia = localStorage.getItem('ubicacionProvincia');
-
-  if (savedProvincia) {
-    mostrarUbicacion(savedProvincia);
-    return;
-  }
-
   if (!navigator.geolocation) return;
 
   navigator.geolocation.getCurrentPosition(
@@ -382,7 +375,6 @@ function renderUbicacion() {
 
       if (!nearest || minDist > 200) return;
 
-      localStorage.setItem('ubicacionProvincia', nearest.nombre);
       mostrarUbicacion(nearest.nombre);
     },
     () => {},
