@@ -349,6 +349,13 @@ function renderDestacados() {
 }
 
 function renderUbicacion() {
+  const savedProvincia = localStorage.getItem('ubicacionProvincia');
+
+  if (savedProvincia) {
+    mostrarUbicacion(savedProvincia);
+    return;
+  }
+
   if (!navigator.geolocation) return;
 
   navigator.geolocation.getCurrentPosition(
@@ -375,39 +382,44 @@ function renderUbicacion() {
 
       if (!nearest || minDist > 200) return;
 
-      const data = conClima.find(p => p.nombre === nearest.nombre);
-      if (!data || !data.current) return;
-
-      const clima = codigosClima[data.current.weather_code] || { texto: 'Desconocido', icono: '?' };
-      const temp = Math.round(data.current.temperature_2m);
-      const hum = data.current.relative_humidity_2m;
-      const wind = data.current.wind_speed_10m;
-
-      ubicacionGrid.innerHTML = `
-        <div class="card-ubicacion">
-          <span class="ubicacion-badge">Tu ciudad actual</span>
-          <div class="card-top">
-            <div class="card-info">
-              <h2>${nearest.nombre}</h2>
-              <span class="capital">${nearest.capital}</span>
-            </div>
-            <div class="card-weather-summary">
-              <span class="weather-icon">${clima.icono}</span>
-              <span class="weather-temp">${temp}<span class="unit">°C</span></span>
-            </div>
-          </div>
-          <div class="card-desc">${clima.texto}</div>
-          <div class="card-meta">
-            <span>💧 ${hum}%</span>
-            <span>🍃 ${wind} km/h</span>
-          </div>
-        </div>
-      `;
-      ubicacionSection.style.display = '';
+      localStorage.setItem('ubicacionProvincia', nearest.nombre);
+      mostrarUbicacion(nearest.nombre);
     },
     () => {},
     { enableHighAccuracy: false, timeout: 5000 }
   );
+}
+
+function mostrarUbicacion(nombreProvincia) {
+  const data = conClima.find(p => p.nombre === nombreProvincia);
+  if (!data || !data.current) return;
+
+  const clima = codigosClima[data.current.weather_code] || { texto: 'Desconocido', icono: '?' };
+  const temp = Math.round(data.current.temperature_2m);
+  const hum = data.current.relative_humidity_2m;
+  const wind = data.current.wind_speed_10m;
+
+  ubicacionGrid.innerHTML = `
+    <div class="card-ubicacion">
+      <span class="ubicacion-badge">Tu ciudad actual</span>
+      <div class="card-top">
+        <div class="card-info">
+          <h2>${data.nombre}</h2>
+          <span class="capital">${data.capital}</span>
+        </div>
+        <div class="card-weather-summary">
+          <span class="weather-icon">${clima.icono}</span>
+          <span class="weather-temp">${temp}<span class="unit">°C</span></span>
+        </div>
+      </div>
+      <div class="card-desc">${clima.texto}</div>
+      <div class="card-meta">
+        <span>💧 ${hum}%</span>
+        <span>🍃 ${wind} km/h</span>
+      </div>
+    </div>
+  `;
+  ubicacionSection.style.display = '';
 }
 
 // Refresh
