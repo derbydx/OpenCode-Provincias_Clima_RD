@@ -255,6 +255,24 @@ body {
   background: var(--rojo-claro);
 }
 
+.btn-feedback {
+  border: 1.5px solid rgba(0,0,0,0.1);
+  background: var(--blanco);
+  color: var(--azul);
+  padding: 8px 16px;
+  border-radius: var(--radio-boton);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-feedback:hover {
+  background: #e8eef5;
+}
+
 /* Stats */
 .stats-bar {
   max-width: 1400px;
@@ -809,6 +827,83 @@ body {
   line-height: 1.5;
 }
 
+/* Feedback form */
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+  text-align: left;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: var(--radio-boton);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.85rem;
+  color: var(--texto);
+  background: var(--blanco);
+  transition: border-color 0.2s;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--azul);
+}
+
+.btn-submit {
+  background: var(--azul);
+  color: var(--blanco);
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radio-boton);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover {
+  background: var(--azul-claro);
+}
+
+/* Footer */
+.site-footer {
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+  background: var(--azul);
+  color: var(--blanco);
+  font-size: 0.8rem;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.footer-sep {
+  opacity: 0.4;
+}
+
+.footer-content a {
+  color: var(--blanco);
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.footer-content a:hover {
+  opacity: 1;
+}
+
 .hidden { display: none !important; }
 
 /* Responsive */
@@ -821,6 +916,7 @@ body {
   .group-header h2 { font-size: 0.9rem; }
   .filter-bar { padding: 0 12px; }
   .btn-subscribe { width: 100%; }
+  .btn-feedback { width: 100%; }
   .destacado-columns { flex-direction: column; }
   .lluvias-grid { grid-auto-columns: 200px; }
 }

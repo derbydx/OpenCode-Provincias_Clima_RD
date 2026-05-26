@@ -94,6 +94,10 @@ const subscribeBtn = document.getElementById('subscribeBtn');
 const modal = document.getElementById('subscribeModal');
 const modalClose = document.getElementById('modalClose');
 
+const feedbackBtn = document.getElementById('feedbackBtn');
+const feedbackModal = document.getElementById('feedbackModal');
+const feedbackModalClose = document.getElementById('feedbackModalClose');
+
 let conClima = [];
 
 function getGrupoClima(code) {
@@ -443,6 +447,15 @@ modalClose.addEventListener('click', () => modal.classList.add('hidden'));
 
 modal.addEventListener('click', (e) => {
   if (e.target === modal) modal.classList.add('hidden');
+});
+
+// Feedback modal
+feedbackBtn.addEventListener('click', () => feedbackModal.classList.remove('hidden'));
+
+feedbackModalClose.addEventListener('click', () => feedbackModal.classList.add('hidden'));
+
+feedbackModal.addEventListener('click', (e) => {
+  if (e.target === feedbackModal) feedbackModal.classList.add('hidden');
 });
 
 // Filter events
