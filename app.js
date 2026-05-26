@@ -76,7 +76,7 @@ const gruposClima = [
 ];
 
 const app = document.getElementById('app');
-const destacadoGrid = document.getElementById('destacadoGrid');
+
 const lluviasAhora = document.getElementById('lluviasAhora');
 const lluviasGrid = document.getElementById('lluviasGrid');
 const ubicacionSection = document.getElementById('tuUbicacion');
@@ -112,6 +112,15 @@ function showLoading() {
   `;
 }
 
+function getTempCategory(temp) {
+  if (temp >= 35) return { texto: 'Calor extremo', clase: 'temp-extremo' };
+  if (temp >= 30) return { texto: 'Mucho calor', clase: 'temp-mucho-calor' };
+  if (temp >= 26) return { texto: 'Calido', clase: 'temp-calido' };
+  if (temp >= 22) return { texto: 'Agradable', clase: 'temp-agradable' };
+  if (temp >= 18) return { texto: 'Fresco', clase: 'temp-fresco' };
+  return { texto: 'Frio', clase: 'temp-frio' };
+}
+
 function createCard(p, idx) {
   const clima = p.current ? (codigosClima[p.current.weather_code] || { texto: "Desconocido", icono: "?" }) : null;
   const temp = p.current ? Math.round(p.current.temperature_2m) : "--";
@@ -124,7 +133,11 @@ function createCard(p, idx) {
   card.className = 'card';
   card.dataset.index = idx;
   card.style.animationDelay = (idx * 0.02) + 's';
+
+  const categoria = temp !== '--' ? getTempCategory(temp) : null;
+
   card.innerHTML = `
+    ${categoria ? `<span class="card-badge ${categoria.clase}">${categoria.texto}</span>` : ''}
     <div class="card-top">
       <div class="card-info">
         <h2>${p.nombre}</h2>
@@ -296,58 +309,6 @@ async function fetchWeather() {
 function renderDestacados() {
   const conDatos = conClima.filter(p => p.current);
   if (conDatos.length === 0) return;
-
-  let extremos = [];
-
-  const tormentas = conDatos.filter(p => p.current.weather_code >= 95);
-  const lluvias = conDatos.filter(p => [65, 67, 82].includes(p.current.weather_code));
-  const masCalor = conDatos.sort((a, b) => b.current.temperature_2m - a.current.temperature_2m)[0];
-
-  if (tormentas.length > 0) {
-    extremos.push({ provincia: tormentas[0], tipo: 'tormenta' });
-  }
-  if (lluvias.length > 0 && !extremos.find(e => e.provincia === lluvias[0])) {
-    extremos.push({ provincia: lluvias[0], tipo: 'lluvia' });
-  }
-
-  if (extremos.length === 0) {
-    extremos.push({ provincia: masCalor, tipo: 'calor' });
-  } else if (extremos.length < 2 && masCalor && !extremos.find(e => e.provincia === masCalor)) {
-    extremos.push({ provincia: masCalor, tipo: 'calor' });
-  }
-
-  destacadoGrid.innerHTML = '';
-
-  extremos.forEach(({ provincia: p, tipo }) => {
-    const clima = codigosClima[p.current.weather_code] || { texto: 'Desconocido', icono: '?' };
-    const temp = Math.round(p.current.temperature_2m);
-    const hum = p.current.relative_humidity_2m;
-    const wind = p.current.wind_speed_10m;
-
-    const etiquetas = { calor: 'Calor extremo', lluvia: 'Alerta lluvia', tormenta: 'Tormenta' };
-
-    const card = document.createElement('div');
-    card.className = `card-destacado card-destacado--${tipo}`;
-    card.innerHTML = `
-      <span class="destacado-badge destacado-badge--${tipo}">${etiquetas[tipo]}</span>
-      <div class="card-top">
-        <div class="card-info">
-          <h2>${p.nombre}</h2>
-          <span class="capital">${p.capital}</span>
-        </div>
-        <div class="card-weather-summary">
-          <span class="weather-icon">${clima.icono}</span>
-          <span class="weather-temp">${temp}<span class="unit">°C</span></span>
-        </div>
-      </div>
-      <div class="card-desc">${clima.texto}</div>
-      <div class="card-meta">
-        <span>💧 ${hum}%</span>
-        <span>🍃 ${wind} km/h</span>
-      </div>
-    `;
-    destacadoGrid.appendChild(card);
-  });
 
   const lluviasHoy = conDatos.filter(p =>
     [51, 53, 55, 56, 57, 80, 81, 82].includes(p.current.weather_code)
