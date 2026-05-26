@@ -303,6 +303,7 @@ body {
 
 .card-ubicacion .card-info h2 {
   font-size: 1.3rem;
+  padding-right: 100px;
 }
 
 .card-ubicacion .card-info .capital {
@@ -422,8 +423,12 @@ body {
 
 .lluvias-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: 260px;
   gap: 15px;
+  overflow-x: auto;
+  padding-bottom: 15px;
 }
 
 .card-lluvia {
@@ -816,5 +821,5 @@ body {
   .filter-bar { padding: 0 12px; }
   .btn-subscribe { width: 100%; }
   .destacado-columns { flex-direction: column; }
-  .lluvias-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .lluvias-grid { grid-auto-columns: 200px; }
 }
