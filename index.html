@@ -25,24 +25,20 @@
 </div>
 
 <div class="filter-bar" id="filterBar">
-  <div class="filter-row">
-    <span class="filter-label">Clima:</span>
-    <div id="weatherGroupFilters" class="filter-chips"></div>
-  </div>
-  <div class="filter-row filter-row-actions">
-    <span class="filter-label">Orden:</span>
-    <select id="sortSelect">
-      <option value="default">Por grupo</option>
-      <option value="name">Nombre A-Z</option>
-      <option value="temp-asc">Temperatura baja</option>
-      <option value="temp-desc">Temperatura alta</option>
-    </select>
-    <span class="filter-label filter-label-wind">Viento min:</span>
-    <input type="range" id="windSlider" min="0" max="50" value="0" class="filter-range">
-    <span id="windValue" class="wind-value">0 km/h</span>
-    <button id="resetBtn" class="btn-reset">Reiniciar filtros</button>
-    <button id="subscribeBtn" class="btn-subscribe">Suscribirse</button>
-  </div>
+  <span class="filter-label">Clima:</span>
+  <div id="weatherGroupFilters" class="filter-chips"></div>
+  <span class="filter-label">Orden:</span>
+  <select id="sortSelect">
+    <option value="default">Por grupo</option>
+    <option value="name">Nombre A-Z</option>
+    <option value="temp-asc">Temperatura baja</option>
+    <option value="temp-desc">Temperatura alta</option>
+  </select>
+  <span class="filter-label">Viento min:</span>
+  <input type="range" id="windSlider" min="0" max="50" value="0" class="filter-range">
+  <span id="windValue" class="wind-value">0 km/h</span>
+  <button id="resetBtn" class="btn-reset">Reiniciar filtros</button>
+  <button id="subscribeBtn" class="btn-subscribe">Suscribirse</button>
 </div>
 
 <div class="stats-bar">
@@ -50,6 +46,11 @@
   <span id="updateInfo">Cargando...</span>
   <button id="refreshBtn" class="btn-refresh">Actualizar ahora</button>
 </div>
+
+<section id="tuUbicacion" class="ubicacion-section" style="display:none">
+  <h2 class="ubicacion-titulo">Clima en tu ubicacion</h2>
+  <div id="ubicacionGrid" class="ubicacion-grid"></div>
+</section>
 
 <section id="climaDestacado" class="destacado-section">
   <h2 class="destacado-titulo">Clima Destacado</h2>

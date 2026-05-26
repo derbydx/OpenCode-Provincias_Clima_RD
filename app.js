@@ -77,6 +77,8 @@ const gruposClima = [
 
 const app = document.getElementById('app');
 const destacadoGrid = document.getElementById('destacadoGrid');
+const ubicacionSection = document.getElementById('tuUbicacion');
+const ubicacionGrid = document.getElementById('ubicacionGrid');
 const searchInput = document.getElementById('searchInput');
 const visibleCount = document.getElementById('visibleCount');
 const updateInfo = document.getElementById('updateInfo');
@@ -273,6 +275,7 @@ async function fetchWeather() {
 
     buildGroupChips();
     renderDestacados();
+    renderUbicacion();
     applyFilters();
     updateInfo.textContent = `Actualizado: ${new Date().toLocaleString('es-DO')}`;
   } catch (err) {
@@ -343,6 +346,68 @@ function renderDestacados() {
     `;
     destacadoGrid.appendChild(card);
   });
+}
+
+function renderUbicacion() {
+  if (!navigator.geolocation) return;
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const userLat = pos.coords.latitude;
+      const userLon = pos.coords.longitude;
+
+      const deg2rad = (deg) => deg * (Math.PI / 180);
+      let minDist = Infinity;
+      let nearest = null;
+
+      for (const p of provincias) {
+        const dlat = deg2rad(p.lat - userLat);
+        const dlon = deg2rad(p.lon - userLon);
+        const a = Math.sin(dlat / 2) ** 2 +
+          Math.cos(deg2rad(userLat)) * Math.cos(deg2rad(p.lat)) *
+          Math.sin(dlon / 2) ** 2;
+        const dist = 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        if (dist < minDist) {
+          minDist = dist;
+          nearest = p;
+        }
+      }
+
+      if (!nearest || minDist > 200) return;
+
+      const data = conClima.find(p => p.nombre === nearest.nombre);
+      if (!data || !data.current) return;
+
+      const clima = codigosClima[data.current.weather_code] || { texto: 'Desconocido', icono: '?' };
+      const temp = Math.round(data.current.temperature_2m);
+      const hum = data.current.relative_humidity_2m;
+      const wind = data.current.wind_speed_10m;
+
+      ubicacionGrid.innerHTML = `
+        <div class="card-ubicacion">
+          <span class="ubicacion-badge">Tu ciudad actual</span>
+          <div class="card-top">
+            <div class="card-info">
+              <h2>${nearest.nombre}</h2>
+              <span class="capital">${nearest.capital}</span>
+            </div>
+            <div class="card-weather-summary">
+              <span class="weather-icon">${clima.icono}</span>
+              <span class="weather-temp">${temp}<span class="unit">°C</span></span>
+            </div>
+          </div>
+          <div class="card-desc">${clima.texto}</div>
+          <div class="card-meta">
+            <span>💧 ${hum}%</span>
+            <span>🍃 ${wind} km/h</span>
+          </div>
+        </div>
+      `;
+      ubicacionSection.style.display = '';
+    },
+    () => {},
+    { enableHighAccuracy: false, timeout: 5000 }
+  );
 }
 
 // Refresh
