@@ -83,6 +83,8 @@ const sortSelect = document.getElementById('sortSelect');
 const windSlider = document.getElementById('windSlider');
 const windValue = document.getElementById('windValue');
 const filterChips = document.getElementById('weatherGroupFilters');
+const refreshBtn = document.getElementById('refreshBtn');
+const resetBtn = document.getElementById('resetBtn');
 const subscribeBtn = document.getElementById('subscribeBtn');
 const modal = document.getElementById('subscribeModal');
 const modalClose = document.getElementById('modalClose');
@@ -286,6 +288,24 @@ async function fetchWeather() {
     `;
   }
 }
+
+// Refresh
+refreshBtn.addEventListener('click', () => {
+  fetchWeather();
+});
+
+// Auto-refresh every hour
+setInterval(fetchWeather, 3600000);
+
+// Reset filters
+resetBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  sortSelect.value = 'default';
+  windSlider.value = 0;
+  windValue.textContent = '0 km/h';
+  filterChips.querySelectorAll('.filter-chip').forEach(chip => chip.classList.add('active'));
+  applyFilters();
+});
 
 // Subscribe modal
 subscribeBtn.addEventListener('click', () => modal.classList.remove('hidden'));
