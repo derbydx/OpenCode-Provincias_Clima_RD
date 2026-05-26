@@ -417,14 +417,12 @@ body {
 }
 
 .lluvias-grid {
-  display: flex;
-  overflow-x: auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 15px;
-  padding-bottom: 15px;
 }
 
 .card-lluvia {
-  flex: 0 0 250px;
   background: linear-gradient(135deg, #f0f7ff, #e8f4fd);
   border-radius: 12px;
   border: 1.5px solid #90caf9;
@@ -606,12 +604,11 @@ body {
 
 /* App container */
 #app {
-  max-width: 1400px;
-  margin: 24px auto;
+  width: 100%;
   padding: 0 24px 60px;
+  box-sizing: border-box;
 }
 
-/* Group section */
 .group {
   margin-bottom: 20px;
 }
@@ -852,5 +849,6 @@ body {
   .filter-bar { padding: 0 12px; }
   .btn-subscribe { width: 100%; }
   .destacado-columns { flex-direction: column; }
+  .lluvias-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
   .destacado-grid { grid-template-columns: 1fr; }
 }
