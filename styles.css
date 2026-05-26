@@ -19,6 +19,12 @@ body {
   background: var(--fondo);
   color: var(--texto);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-wrap {
+  flex: 1;
 }
 
 /* Hero */
