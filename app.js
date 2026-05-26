@@ -77,6 +77,8 @@ const gruposClima = [
 
 const app = document.getElementById('app');
 const destacadoGrid = document.getElementById('destacadoGrid');
+const lluviasAhora = document.getElementById('lluviasAhora');
+const lluviasGrid = document.getElementById('lluviasGrid');
 const ubicacionSection = document.getElementById('tuUbicacion');
 const ubicacionGrid = document.getElementById('ubicacionGrid');
 const searchInput = document.getElementById('searchInput');
@@ -345,6 +347,47 @@ function renderDestacados() {
       </div>
     `;
     destacadoGrid.appendChild(card);
+  });
+
+  const lluvias = conDatos.filter(p =>
+    [51, 53, 55, 56, 57, 80, 81, 82].includes(p.current.weather_code)
+  );
+
+  if (lluvias.length === 0) {
+    lluviasAhora.style.display = '';
+    lluviasGrid.innerHTML = '<div class="lluvias-vacio">Buen tiempo en todo el pais</div>';
+    return;
+  }
+
+  lluviasAhora.style.display = '';
+  lluviasGrid.innerHTML = '';
+  lluvias.forEach((p, i) => {
+    const clima = codigosClima[p.current.weather_code] || { texto: 'Desconocido', icono: '?' };
+    const temp = Math.round(p.current.temperature_2m);
+    const hum = p.current.relative_humidity_2m;
+    const wind = p.current.wind_speed_10m;
+
+    const card = document.createElement('div');
+    card.className = 'card-lluvia';
+    card.style.animationDelay = (i * 0.04) + 's';
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="card-info">
+          <h2>${p.nombre}</h2>
+          <span class="capital">${p.capital}</span>
+        </div>
+        <div class="card-weather-summary">
+          <span class="weather-icon">${clima.icono}</span>
+          <span class="weather-temp">${temp}<span class="unit">°C</span></span>
+        </div>
+      </div>
+      <div class="card-desc">${clima.texto}</div>
+      <div class="card-meta">
+        <span>💧 ${hum}%</span>
+        <span>🍃 ${wind} km/h</span>
+      </div>
+    `;
+    lluviasGrid.appendChild(card);
   });
 }
 

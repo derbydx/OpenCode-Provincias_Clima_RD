@@ -403,6 +403,116 @@ body {
   gap: 20px;
 }
 
+.lluvias-section {
+  margin-top: 32px;
+}
+
+.lluvias-titulo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.lluvias-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.card-lluvia {
+  background: linear-gradient(135deg, #f0f7ff, #e8f4fd);
+  border-radius: 12px;
+  border: 1.5px solid #90caf9;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+  animation: fadeUp 0.5s ease both;
+}
+
+.card-lluvia:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.card-lluvia .card-top {
+  padding: 12px 12px 0;
+}
+
+.card-lluvia .card-info h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.card-lluvia .card-info .capital {
+  font-size: 0.65rem;
+  color: #888;
+  display: block;
+  margin-top: 1px;
+}
+
+.card-lluvia .card-weather-summary {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  margin-left: 6px;
+}
+
+.card-lluvia .weather-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.card-lluvia .weather-temp {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.card-lluvia .weather-temp .unit {
+  font-size: 0.65rem;
+  font-weight: 400;
+  opacity: 0.4;
+  vertical-align: super;
+}
+
+.card-lluvia .card-desc {
+  padding: 3px 12px 0;
+  font-size: 0.65rem;
+  color: var(--texto-suave);
+}
+
+.card-lluvia .card-meta {
+  padding: 6px 12px 10px;
+  display: flex;
+  gap: 8px;
+  font-size: 0.62rem;
+  color: #999;
+}
+
+.card-lluvia .card-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.lluvias-vacio {
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
 .card-destacado {
   background: #ffffff;
   border-radius: 12px;
